@@ -28,8 +28,9 @@ public class CustomResponseBodyAdviceAdapter implements ResponseBodyAdvice<Objec
 			ServerHttpResponse serverHttpResponse) {
 		if (serverHttpRequest instanceof ServletServerHttpRequest
 				&& serverHttpResponse instanceof ServletServerHttpResponse) {
-			loggingService.logResponse(((ServletServerHttpRequest) serverHttpRequest).getServletRequest(),
-					((ServletServerHttpResponse) serverHttpResponse).getServletResponse(), object);
+			loggingService.logResponse(
+					HttpRequestTraceUtil.getTraceId(((ServletServerHttpRequest) serverHttpRequest).getServletRequest()),
+					((ServletServerHttpResponse) serverHttpResponse).getServletResponse().getStatus(), object);
 		}
 		return object;
 	}

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiController {
 
+	@GetMapping("/thing/noreturn")
+	public void getNoReturn(@PathParam("name") String name) {
+	}
+
 	@GetMapping("/thing")
 	public Thing getThingPath(@PathParam("name") String name) {
 

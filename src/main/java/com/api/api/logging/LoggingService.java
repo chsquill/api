@@ -1,8 +1,5 @@
 package com.api.api.logging;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,11 +29,14 @@ public class LoggingService {
 	}
 
 	// @Async
-	public void logResponse(HttpServletRequest request, HttpServletResponse response, Object object) {
+	public void logResponse(String traceId, Integer status, Object object) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			String traceId = HttpRequestTraceUtil.getTraceId(request);
-			System.out.println("### " + traceId + " : " + objectMapper.writeValueAsString(object));
+			if (object != null) {
+				System.out.println("### " + traceId + " : " + status + " : " + objectMapper.writeValueAsString(object));
+			} else {
+				System.out.println("### " + traceId + " : " + status);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
